@@ -72,7 +72,7 @@ jobs:
           name: Install Dependencies
           command: |
             python -m pip install --upgrade pip
-            pip install pytest
+            pip install "pytest==7.3.1"
             pip install .
       - run:
           name: Run Windows-specific test
@@ -81,7 +81,7 @@ jobs:
 
   mypy_linting:
     docker:
-      - image: cimg/python:3.12
+      - image: cimg/python:3.12.9
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -109,7 +109,7 @@ jobs:
 
   semgrep:
     docker:
-      - image: cimg/python:3.12
+      - image: cimg/python:3.12.9
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -120,14 +120,14 @@ jobs:
       - setup_google_dns
       - run:
           name: Install Semgrep
-          command: pip install semgrep
+          command: pip install "semgrep==1.90.0"
       - run:
           name: Run Semgrep (custom rules only)
           command: semgrep scan --config .semgrep/rules . --error
 
   local_testing_part1:
     docker:
-      - image: cimg/python:3.12
+      - image: cimg/python:3.12.9
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -161,7 +161,7 @@ jobs:
               "diskcache==5.6.1" "Pillow==10.3.0" "jsonschema==4.22.0" \
               "pytest-xdist==3.6.1" "pytest-timeout==2.2.0" "websockets==13.1.0"
             pip install semantic_router --no-deps
-            pip install aurelio_sdk --no-deps
+            pip install "aurelio_sdk==0.0.19" --no-deps
             pip uninstall posthog -y
       - setup_litellm_enterprise_pip
       - save_cache:
@@ -179,7 +179,7 @@ jobs:
           name: Black Formatting
           command: |
             cd litellm
-            python -m pip install black
+            python -m pip install "black==23.12.1"
             python -m black .
             cd ..
 
@@ -222,7 +222,7 @@ jobs:
             - local_testing_part1_coverage
   local_testing_part2:
     docker:
-      - image: cimg/python:3.12
+      - image: cimg/python:3.12.9
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -256,7 +256,7 @@ jobs:
               "diskcache==5.6.1" "Pillow==10.3.0" "jsonschema==4.22.0" \
               "pytest-xdist==3.6.1" "pytest-timeout==2.2.0" "websockets==13.1.0"
             pip install semantic_router --no-deps
-            pip install aurelio_sdk --no-deps
+            pip install "aurelio_sdk==0.0.19" --no-deps
             pip uninstall posthog -y
       - setup_litellm_enterprise_pip
       - save_cache:
@@ -274,7 +274,7 @@ jobs:
           name: Black Formatting
           command: |
             cd litellm
-            python -m pip install black
+            python -m pip install "black==23.12.1"
             python -m black .
             cd ..
 
@@ -317,7 +317,7 @@ jobs:
             - local_testing_part2_coverage
   langfuse_logging_unit_tests:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -347,15 +347,15 @@ jobs:
             pip install "mypy==1.18.2"
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
-            pip install pyarrow
+            pip install "pyarrow==22.0.0"
             pip install "boto3==1.36.0"
             pip install "aioboto3==13.4.0"
-            pip install langchain
+            pip install "langchain==0.3.25"
             pip install lunary==0.2.5
             pip install "azure-identity==1.16.1"
             pip install "langfuse==2.59.7"
             pip install "logfire==0.29.0"
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install traceloop-sdk==0.21.1
             pip install opentelemetry-api==1.25.0
             pip install opentelemetry-sdk==1.25.0
@@ -365,16 +365,16 @@ jobs:
             pip install "detect_secrets==1.5.0"
             pip install "httpx==0.24.1"
             pip install "respx==0.22.0"
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install "gunicorn==21.2.0"
             pip install "anyio==4.2.0"
             pip install "aiodynamo==23.10.1"
             pip install "asyncio==3.4.3"
             pip install "apscheduler==3.10.4"
             pip install "PyGithub==1.59.1"
-            pip install argon2-cffi
+            pip install "argon2-cffi==23.1.0"
             pip install "pytest-mock==3.12.0"
-            pip install python-multipart
+            pip install "python-multipart==0.0.20"
             pip install google-cloud-aiplatform
             pip install prometheus-client==0.20.0
             pip install "pydantic==2.10.2"
@@ -408,7 +408,7 @@ jobs:
           path: test-results
   caching_unit_tests:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -446,15 +446,15 @@ jobs:
             pip install "mypy==1.18.2"
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
-            pip install pyarrow
+            pip install "pyarrow==22.0.0"
             pip install "boto3==1.36.0"
             pip install "aioboto3==13.4.0"
-            pip install langchain
+            pip install "langchain==0.3.25"
             pip install lunary==0.2.5
             pip install "azure-identity==1.16.1"
             pip install "langfuse==2.59.7"
             pip install "logfire==0.29.0"
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install traceloop-sdk==0.21.1
             pip install opentelemetry-api==1.25.0
             pip install opentelemetry-sdk==1.25.0
@@ -464,16 +464,16 @@ jobs:
             pip install "detect_secrets==1.5.0"
             pip install "httpx==0.24.1"
             pip install "respx==0.22.0"
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install "gunicorn==21.2.0"
             pip install "anyio==4.2.0"
             pip install "aiodynamo==23.10.1"
             pip install "asyncio==3.4.3"
             pip install "apscheduler==3.10.4"
             pip install "PyGithub==1.59.1"
-            pip install argon2-cffi
+            pip install "argon2-cffi==23.1.0"
             pip install "pytest-mock==3.12.0"
-            pip install python-multipart
+            pip install "python-multipart==0.0.20"
             pip install google-cloud-aiplatform
             pip install prometheus-client==0.20.0
             pip install "pydantic==2.10.2"
@@ -521,7 +521,7 @@ jobs:
           path: test-results
   auth_ui_unit_tests:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -565,7 +565,7 @@ jobs:
 
   litellm_router_testing: # Runs all tests with the "router" keyword
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -590,7 +590,7 @@ jobs:
             pip install "pytest-xdist==3.6.1"
             pip install "pytest-timeout==2.2.0"
             pip install semantic_router --no-deps
-            pip install aurelio_sdk --no-deps
+            pip install "aurelio_sdk==0.0.19" --no-deps
       - save_cache:
           paths:
             - /home/circleci/.pyenv
@@ -622,7 +622,7 @@ jobs:
 
   litellm_router_unit_testing: # Runs all tests with the "router" keyword
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -645,7 +645,7 @@ jobs:
             pip install "pytest-retry==1.6.3"
             pip install "pytest-asyncio==0.21.1"
             pip install semantic_router --no-deps
-            pip install aurelio_sdk --no-deps
+            pip install "aurelio_sdk==0.0.19" --no-deps
             pip install "pytest-xdist==3.6.1"
       - save_cache:
           paths:
@@ -666,7 +666,7 @@ jobs:
           path: test-results
   litellm_security_tests:
     docker:
-      - image: cimg/python:3.13
+      - image: cimg/python:3.13.2
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -738,7 +738,7 @@ jobs:
   # test_key_generate_prisma runs separately without parallel execution to avoid event loop issues with logging worker
   litellm_proxy_unit_testing_key_generation:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -774,15 +774,15 @@ jobs:
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
             pip install "google-genai==1.22.0"
-            pip install pyarrow
+            pip install "pyarrow==22.0.0"
             pip install "boto3==1.36.0"
             pip install "aioboto3==13.4.0"
-            pip install langchain
+            pip install "langchain==0.3.25"
             pip install lunary==0.2.5
             pip install "azure-identity==1.16.1"
             pip install "langfuse==2.59.7"
             pip install "logfire==0.29.0"
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install traceloop-sdk==0.21.1
             pip install opentelemetry-api==1.25.0
             pip install opentelemetry-sdk==1.25.0
@@ -792,16 +792,16 @@ jobs:
             pip install "detect_secrets==1.5.0"
             pip install "httpx==0.24.1"
             pip install "respx==0.22.0"
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install "gunicorn==21.2.0"
             pip install "anyio==4.2.0"
             pip install "aiodynamo==23.10.1"
             pip install "asyncio==3.4.3"
             pip install "apscheduler==3.10.4"
             pip install "PyGithub==1.59.1"
-            pip install argon2-cffi
+            pip install "argon2-cffi==23.1.0"
             pip install "pytest-mock==3.12.0"
-            pip install python-multipart
+            pip install "python-multipart==0.0.20"
             pip install google-cloud-aiplatform
             pip install prometheus-client==0.20.0
             pip install "pydantic==2.10.2"
@@ -844,7 +844,7 @@ jobs:
             - litellm_proxy_unit_tests_key_generation_coverage
   litellm_proxy_unit_testing_part1:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -880,15 +880,15 @@ jobs:
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
             pip install "google-genai==1.22.0"
-            pip install pyarrow
+            pip install "pyarrow==22.0.0"
             pip install "boto3==1.36.0"
             pip install "aioboto3==13.4.0"
-            pip install langchain
+            pip install "langchain==0.3.25"
             pip install lunary==0.2.5
             pip install "azure-identity==1.16.1"
             pip install "langfuse==2.59.7"
             pip install "logfire==0.29.0"
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install traceloop-sdk==0.21.1
             pip install opentelemetry-api==1.25.0
             pip install opentelemetry-sdk==1.25.0
@@ -898,16 +898,16 @@ jobs:
             pip install "detect_secrets==1.5.0"
             pip install "httpx==0.24.1"
             pip install "respx==0.22.0"
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install "gunicorn==21.2.0"
             pip install "anyio==4.2.0"
             pip install "aiodynamo==23.10.1"
             pip install "asyncio==3.4.3"
             pip install "apscheduler==3.10.4"
             pip install "PyGithub==1.59.1"
-            pip install argon2-cffi
+            pip install "argon2-cffi==23.1.0"
             pip install "pytest-mock==3.12.0"
-            pip install python-multipart
+            pip install "python-multipart==0.0.20"
             pip install google-cloud-aiplatform
             pip install prometheus-client==0.20.0
             pip install "pydantic==2.10.2"
@@ -940,7 +940,7 @@ jobs:
           path: test-results
   litellm_proxy_unit_testing_part2:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -976,15 +976,15 @@ jobs:
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
             pip install "google-genai==1.22.0"
-            pip install pyarrow
+            pip install "pyarrow==22.0.0"
             pip install "boto3==1.36.0"
             pip install "aioboto3==13.4.0"
-            pip install langchain
+            pip install "langchain==0.3.25"
             pip install lunary==0.2.5
             pip install "azure-identity==1.16.1"
             pip install "langfuse==2.59.7"
             pip install "logfire==0.29.0"
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install traceloop-sdk==0.21.1
             pip install opentelemetry-api==1.25.0
             pip install opentelemetry-sdk==1.25.0
@@ -994,16 +994,16 @@ jobs:
             pip install "detect_secrets==1.5.0"
             pip install "httpx==0.24.1"
             pip install "respx==0.22.0"
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install "gunicorn==21.2.0"
             pip install "anyio==4.2.0"
             pip install "aiodynamo==23.10.1"
             pip install "asyncio==3.4.3"
             pip install "apscheduler==3.10.4"
             pip install "PyGithub==1.59.1"
-            pip install argon2-cffi
+            pip install "argon2-cffi==23.1.0"
             pip install "pytest-mock==3.12.0"
-            pip install python-multipart
+            pip install "python-multipart==0.0.20"
             pip install google-cloud-aiplatform
             pip install prometheus-client==0.20.0
             pip install "pydantic==2.10.2"
@@ -1050,7 +1050,7 @@ jobs:
           name: Install Dependencies
           command: |
             python -m pip install --upgrade pip uv
-            pip install wheel setuptools
+            pip install "wheel==0.46.2" "setuptools==82.0.0"
             uv pip install --system -r requirements.txt
             pip install "pytest==7.3.1"
             pip install "respx==0.22.0"
@@ -1070,7 +1070,7 @@ jobs:
           path: test-results
   llm_translation_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1123,7 +1123,7 @@ jobs:
           path: test-results
   realtime_translation_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1164,7 +1164,7 @@ jobs:
             - realtime_translation_coverage
   mcp_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1210,7 +1210,7 @@ jobs:
             - mcp_coverage
   agent_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1255,7 +1255,7 @@ jobs:
             - agent_coverage
   guardrails_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1277,7 +1277,7 @@ jobs:
             pip install "pydantic==2.10.2"
             pip install "boto3==1.36.0"
             pip install "semantic_router==0.1.10" --no-deps
-            pip install aurelio_sdk
+            pip install "aurelio_sdk==0.0.19"
             pip install "pytest-xdist==3.6.1"
             pip install "pytest-timeout==2.2.0"
       # Run pytest and generate JUnit XML report
@@ -1305,7 +1305,7 @@ jobs:
 
   google_generate_content_endpoint_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1350,7 +1350,7 @@ jobs:
 
   llm_responses_api_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1392,7 +1392,7 @@ jobs:
           path: test-results
   ocr_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1431,7 +1431,7 @@ jobs:
             - ocr_coverage
   search_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1471,7 +1471,7 @@ jobs:
   # Split litellm_mapped_tests into parallel jobs
   litellm_mapped_tests_proxy_part1:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1490,7 +1490,7 @@ jobs:
           path: test-results
   litellm_mapped_tests_proxy_part2:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1509,7 +1509,7 @@ jobs:
           path: test-results
   litellm_mapped_tests_llms:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1526,7 +1526,7 @@ jobs:
           path: test-results
   litellm_mapped_tests_core:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1543,7 +1543,7 @@ jobs:
           path: test-results
   litellm_mapped_tests_litellm_core_utils:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1560,7 +1560,7 @@ jobs:
           path: test-results
   litellm_mapped_tests_mcps:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1587,7 +1587,7 @@ jobs:
             - litellm_mcps_tests_coverage
   litellm_mapped_tests_integrations:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1604,7 +1604,7 @@ jobs:
           path: test-results
   litellm_mapped_enterprise_tests:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1632,7 +1632,7 @@ jobs:
             pip install "responses==0.25.7"
             pip install "pytest-xdist==3.6.1"
             pip install "semantic_router==0.1.10" --no-deps
-            pip install aurelio_sdk
+            pip install "aurelio_sdk==0.0.19"
             pip install "fastapi-offline==1.7.3"
       - setup_litellm_enterprise_pip
       - run:
@@ -1648,7 +1648,7 @@ jobs:
           path: test-results
   batches_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1694,7 +1694,7 @@ jobs:
             - batches_coverage
   litellm_utils_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1708,7 +1708,7 @@ jobs:
           command: |
             python -m pip install --upgrade pip uv
             uv pip install --system -r requirements.txt
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install "respx==0.22.0"
             pip install "pytest==7.3.1"
             pip install "pytest-retry==1.6.3"
@@ -1716,7 +1716,7 @@ jobs:
             pip install "pytest-cov==5.0.0"
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
-            pip install pytest-mock
+            pip install "pytest-mock==3.12.0"
             pip install "pytest-xdist==3.6.1"
       # Run pytest and generate JUnit XML report
       - run:
@@ -1743,7 +1743,7 @@ jobs:
 
   pass_through_unit_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1782,7 +1782,7 @@ jobs:
             - pass_through_unit_tests_coverage
   image_gen_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1816,7 +1816,7 @@ jobs:
           path: test-results
   logging_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1834,7 +1834,7 @@ jobs:
             pip install "pytest-retry==1.6.3"
             pip install "pytest-cov==5.0.0"
             pip install "pytest-asyncio==0.21.1"
-            pip install pytest-mock
+            pip install "pytest-mock==3.12.0"
             pip install "respx==0.22.0"
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
@@ -1868,7 +1868,7 @@ jobs:
             - logging_coverage
   audio_testing:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1911,7 +1911,7 @@ jobs:
             - audio_coverage
   installing_litellm_on_python:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -1925,7 +1925,7 @@ jobs:
           command: |
             python -m pip install --upgrade pip
             pip install python-dotenv
-            pip install pytest
+            pip install "pytest==7.3.1"
             pip install tiktoken
             pip install aiohttp
             pip install openai
@@ -1960,7 +1960,7 @@ jobs:
           name: Install Dependencies
           command: |
             python -m pip install --upgrade pip uv
-            pip install wheel setuptools
+            pip install "wheel==0.46.2" "setuptools==82.0.0"
             uv pip install --system -r requirements.txt
             pip install "pytest==7.3.1"
             pip install "pytest-retry==1.6.3"
@@ -1989,7 +1989,7 @@ jobs:
       - run:
           name: Install Helm
           command: |
-            curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+            curl https://raw.githubusercontent.com/helm/helm/v3.17.0/scripts/get-helm-3 | bash
 
       # Install kind
       - run:
@@ -2062,7 +2062,7 @@ jobs:
 
   check_code_and_doc_quality:
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.11.11
         auth:
           username: ${DOCKERHUB_USERNAME}
           password: ${DOCKERHUB_PASSWORD}
@@ -2080,7 +2080,7 @@ jobs:
             pip install pyright
             pip install beautifulsoup4
             pip install .
-            curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+            curl https://raw.githubusercontent.com/helm/helm/v3.17.0/scripts/get-helm-3 | bash
       - run: python -c "from litellm import *" || (echo '🚨 import failed, this means you introduced unprotected imports! 🚨'; exit 1)
       - run: ruff check ./litellm
       # - run: python ./tests/documentation_tests/test_general_setting_keys.py
@@ -2122,7 +2122,7 @@ jobs:
       - run:
           name: Install Python 3.9
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -2204,7 +2204,7 @@ jobs:
       - run:
           name: Install Python 3.9
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -2227,15 +2227,15 @@ jobs:
             pip install "mypy==1.18.2"
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
-            pip install pyarrow
+            pip install "pyarrow==22.0.0"
             pip install "boto3==1.36.0"
             pip install "aioboto3==13.4.0"
-            pip install langchain
+            pip install "langchain==0.3.25"
             pip install "langfuse>=2.0.0"
             pip install "logfire==0.29.0"
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install prisma
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install jsonschema
             pip install "httpx==0.24.1"
             pip install "gunicorn==21.2.0"
@@ -2261,7 +2261,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -2341,13 +2341,13 @@ jobs:
       - run:
           name: Install Docker CLI (In case it's not already installed)
           command: |
-            curl -fsSL https://get.docker.com | sh
+            curl -fsSL https://get.docker.com | VERSION=27.4.1 sh
             sudo usermod -aG docker $USER
             docker version
       - run:
           name: Install Python 3.10
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -2371,16 +2371,16 @@ jobs:
             pip install "jsonlines==4.0.0"
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
-            pip install pyarrow
+            pip install "pyarrow==22.0.0"
             pip install "boto3==1.36.0"
             pip install "aioboto3==13.4.0"
-            pip install langchain
+            pip install "langchain==0.3.25"
             pip install "langchain_mcp_adapters==0.0.5"
             pip install "langfuse>=2.0.0"
             pip install "logfire==0.29.0"
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install prisma
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install jsonschema
             pip install "httpx==0.24.1"
             pip install "gunicorn==21.2.0"
@@ -2405,7 +2405,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -2488,13 +2488,13 @@ jobs:
       - run:
           name: Install Docker CLI (In case it's not already installed)
           command: |
-            curl -fsSL https://get.docker.com | sh
+            curl -fsSL https://get.docker.com | VERSION=27.4.1 sh
             sudo usermod -aG docker $USER
             docker version
       - run:
           name: Install Python 3.9
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -2517,15 +2517,15 @@ jobs:
             pip install "mypy==1.18.2"
             pip install "google-generativeai==0.3.2"
             pip install "google-cloud-aiplatform==1.43.0"
-            pip install pyarrow
+            pip install "pyarrow==22.0.0"
             pip install "boto3==1.36.0"
             pip install "aioboto3==13.4.0"
-            pip install langchain
+            pip install "langchain==0.3.25"
             pip install "langfuse>=2.0.0"
             pip install "logfire==0.29.0"
-            pip install numpydoc
+            pip install "numpydoc==1.9.0"
             pip install prisma
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install jsonschema
             pip install "httpx==0.24.1"
             pip install "gunicorn==21.2.0"
@@ -2549,7 +2549,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -2676,13 +2676,13 @@ jobs:
       - run:
           name: Install Docker CLI (In case it's not already installed)
           command: |
-            curl -fsSL https://get.docker.com | sh
+            curl -fsSL https://get.docker.com | VERSION=27.4.1 sh
             sudo usermod -aG docker $USER
             docker version
       - run:
           name: Install Python 3.9
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -2713,7 +2713,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -2788,13 +2788,13 @@ jobs:
       - run:
           name: Install Docker CLI (In case it's not already installed)
           command: |
-            curl -fsSL https://get.docker.com | sh
+            curl -fsSL https://get.docker.com | VERSION=27.4.1 sh
             sudo usermod -aG docker $USER
             docker version
       - run:
           name: Install Python 3.9
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -2829,7 +2829,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -2925,14 +2925,14 @@ jobs:
       - run:
           name: Install Docker CLI (In case it's not already installed)
           command: |
-            curl -fsSL https://get.docker.com | sh
+            curl -fsSL https://get.docker.com | VERSION=27.4.1 sh
             sudo usermod -aG docker $USER
             docker version
             sudo systemctl restart docker
       - run:
           name: Install Python 3.9
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -2968,7 +2968,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -3043,7 +3043,7 @@ jobs:
       - run:
           name: Install Python 3.13
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -3131,7 +3131,7 @@ jobs:
       - run:
           name: Install Python 3.10
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -3159,10 +3159,10 @@ jobs:
             pip install "pytest-asyncio==0.21.1"
             pip install "boto3==1.36.0"
             pip install "mypy==1.18.2"
-            pip install pyarrow
-            pip install numpydoc
+            pip install "pyarrow==22.0.0"
+            pip install "numpydoc==1.9.0"
             pip install prisma
-            pip install fastapi
+            pip install "fastapi==0.120.1"
             pip install jsonschema
             pip install "httpx==0.27.0"
             pip install "anyio==3.7.1"
@@ -3190,7 +3190,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -3314,13 +3314,13 @@ jobs:
       - run:
           name: Install Docker CLI (In case it's not already installed)
           command: |
-            curl -fsSL https://get.docker.com | sh
+            curl -fsSL https://get.docker.com | VERSION=27.4.1 sh
             sudo usermod -aG docker $USER
             docker version
       - run:
           name: Install Python 3.10
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -3355,7 +3355,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -3420,13 +3420,13 @@ jobs:
       - run:
           name: Install Docker CLI
           command: |
-            curl -fsSL https://get.docker.com | sh
+            curl -fsSL https://get.docker.com | VERSION=27.4.1 sh
             sudo usermod -aG docker $USER
             docker version
       - run:
           name: Install Python 3.12
           command: |
-            curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+            curl https://repo.anaconda.com/miniconda/Miniconda3-py311_24.11.1-0-Linux-x86_64.sh --output miniconda.sh
             bash miniconda.sh -b -p $HOME/miniconda
             export PATH="$HOME/miniconda/bin:$PATH"
             conda init bash
@@ -3456,7 +3456,7 @@ jobs:
               -e POSTGRES_PASSWORD=dbpassword9090 \
               -e POSTGRES_DB=litellm \
               -p 5432:5432 \
-              postgres:15
+              postgres:15.10
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -3519,7 +3519,7 @@ jobs:
 
   upload-coverage:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.9.21
     steps:
       - checkout
       - attach_workspace:
@@ -3545,7 +3545,7 @@ jobs:
 
   publish_proxy_extras:
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/python:3.8.20
     working_directory: ~/project/litellm-proxy-extras
     environment:
       TWINE_USERNAME: __token__
@@ -3928,7 +3928,7 @@ jobs:
               -e POSTGRES_PASSWORD=postgres \
               -e POSTGRES_DB=circle_test \
               -p 5432:5432 \
-              postgres:14
+              postgres:14.15
       - run:
           name: Wait for PostgreSQL to be ready
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
